@@ -29,7 +29,7 @@ add_darling_executable(installer
 	src/bom/BOMStore.cpp
 	src/bom/BOMBTree.cpp
 	src/bom/BOMFilesBTree.cpp
-	src/pkg/DistributionXml.cpp
+	src/pkg/DistributionXml.mm
 	src/pkg/PackageInfoXml.cpp
 	src/pkg/ReceiptsDb.cpp
 	src/pkg/Installer.cpp
@@ -41,7 +41,7 @@ add_darling_executable(installer
 	src/main-pkgutil.cpp
 )
 
-target_link_libraries(installer z lzma bz2 xml2 cxx CoreFoundation)
+target_link_libraries(installer z lzma bz2 xml2 cxx CoreFoundation Foundation)
 install(TARGETS installer RUNTIME DESTINATION libexec/darling/usr/bin)
 
 set(BINARY_PACKAGING_MODE ON)
@@ -50,4 +50,3 @@ InstallSymlink(installer libexec/darling/usr/bin/pkgutil)
 InstallSymlink(installer libexec/darling/usr/bin/lsbom)
 
 install(FILES installer.8 DESTINATION libexec/darling/usr/share/man/man8)
-
