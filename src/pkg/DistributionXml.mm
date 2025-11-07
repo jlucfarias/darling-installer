@@ -1,6 +1,7 @@
 #include "DistributionXml.h"
 #include <stdexcept>
 #include <cstring>
+#import <Foundation/Foundation.h>
 
 DistributionXml::DistributionXml(std::shared_ptr<Reader> file)
 {
@@ -128,9 +129,11 @@ bool DistributionXml::package(const std::string& id, DistributionXml::PkgRef& pk
 
 		if (pkg.path.empty() && node->children && node->children->type == XML_TEXT_NODE && !xmlIsBlankNode(node->children))
 			pkg.path = (char*) node->children->content;
+
+		NSString *nsPath = [NSString stringWithUTF8String: pkg.path.c_str()];
+		pkg.path = [[nsPath stringByRemovingPercentEncoding] cStringUsingEncoding: NSUTF8StringEncoding];
 	}
-	
+
 	xmlXPathFreeObject(xpathObj);
 	return true;
 }
-
